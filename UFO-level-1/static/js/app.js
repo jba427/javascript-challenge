@@ -1,7 +1,6 @@
 // from data.js
 var tableData = data;
 
-// YOUR CODE HERE!
 var tbody = d3.select("tbody");
 
 // Select the button
@@ -14,9 +13,17 @@ var form = d3.select("#filters");
 button.on("click", runEnter);
 form.on("submit",runEnter);
 
+tableData.forEach((tableData) => {
+  var row = tbody.append("tr");
+  Object.entries(tableData).forEach(([key, value]) => {
+    var cell = row.append("td");
+    cell.text(value);
+  });
+}); 
+
 // Complete the event handler function for the form
 function runEnter() {
-
+    
     // Prevent the page from refreshing
     d3.event.preventDefault();
     
@@ -32,6 +39,14 @@ function runEnter() {
   
     console.log(filteredData);
 
+    //Clear the table before refreshing filtered data on the screen
+    var table = document.getElementById("ufo-table");
+    for (var i = table.rows.length - 1; i > 0; i--)
+    {
+      table.deleteRow(i);
+    }
+
+    
     filteredData.forEach((filteredData) => {
         var row = tbody.append("tr");
         Object.entries(filteredData).forEach(([key, value]) => {
